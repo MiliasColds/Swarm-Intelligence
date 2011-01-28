@@ -27,8 +27,10 @@ public class TEST extends JavaPlugin {
 	 private final TESTBlockListener blockListener = new TESTBlockListener(this); 
 	 private final HashMap debugees = new HashMap(); 
 	 static World current_world;
+	 Main m;
 	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException { 
 	 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
+	 m = new Main();
 	 // TODO: Place any custom initialisation code here 
 	 
 	 // NOTE: Event registration should be done in onEnable not here as all events are unregistered when a plugin is disabled 
@@ -41,7 +43,7 @@ public class TEST extends JavaPlugin {
 		 World W = getServer().getWorlds()[0];
 		 TEST.current_world = W;
 		 //BlockDump(W);
-		 
+		 m.run();
 		 
 		 // Register our events 
 		 PluginManager pm = getServer().getPluginManager(); 
@@ -74,8 +76,8 @@ public class TEST extends JavaPlugin {
 	 
 	 private void BlockDump(World w){
 		 
-		 for(int i=1;i<256;i++){
-			 for(int j=1;j<256;j++){
+		 for(int i=1;i<16;i++){
+			 for(int j=1;j<16;j++){
 				 for(int k=1;k<128;k++){
 					 Block b = w.getBlockAt(i,j,k);
 					 System.out.println(b.toString());
