@@ -4,12 +4,14 @@
  * generic distance/etc. things in here if we needed to.
  */
 public class Point {
-	public int xPos;
-	public int yPos;
+	public int x;
+	public int y;
+	public int z;
 	
-	public Point(int xPos, int yPos)
+	public Point(int xPos, int yPos, int zPos)
 	{
-		this.xPos = xPos;
-		this.yPos = yPos;
+		this.x = xPos;
+		this.y = yPos;
+		this.z = zPos;
 	}
 }
