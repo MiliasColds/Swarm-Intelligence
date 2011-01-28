@@ -26,7 +26,7 @@ public class TEST extends JavaPlugin {
 	 private final TESTPlayerListener playerListener = new TESTPlayerListener(this); 
 	 private final TESTBlockListener blockListener = new TESTBlockListener(this); 
 	 private final HashMap debugees = new HashMap(); 
-	 
+	 static World current_world;
 	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException { 
 	 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
 	 // TODO: Place any custom initialisation code here 
@@ -39,8 +39,8 @@ public class TEST extends JavaPlugin {
  
 	 public void onEnable() { 
 		 World W = getServer().getWorlds()[0];
-		 
-		 BlockDump(W);
+		 TEST.current_world = W;
+		 //BlockDump(W);
 		 
 		 
 		 // Register our events 
@@ -84,6 +84,20 @@ public class TEST extends JavaPlugin {
 		 }
 		 
 	 }
+	 
+	 
+	 public static int getBlockAt(int x,int y, int z){
+		 return TEST.current_world.getBlockTypeIdAt(x,y,z);
+	 }
+	 public static int removeBlockAt(int x,int y, int z){
+		 int type = TEST.current_world.getBlockTypeIdAt(x,y,z);
+		 TEST.current_world.getBlockAt(x,y,z).setTypeId(0);
+		 return type;
+	 }
+	 public static void setBlockAt(int x,int y, int z,int type){
+		 TEST.current_world.getBlockAt(x,y,z).setTypeId(type);
+	 }
+	 
  }
 
  
