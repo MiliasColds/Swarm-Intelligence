@@ -19,7 +19,20 @@ public class Ant
 	{
 		Random random = new Random();
 		com.bukkit.ISOCOHEDRON_Ian.TEST.Block targetBlock = adjacentBlocks.get(random.nextInt(adjacentBlocks.size()));
-		TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
-		this.Position = targetBlock.Position;
+		try{
+			if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)>0){
+				TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
+				this.Position = targetBlock.Position;
+				System.out.println(targetBlock);
+			}
+			else { 
+				TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,20);
+				this.Position = targetBlock.Position;
+				System.out.println(targetBlock);
+			}
+		}
+		catch(NullPointerException e){
+			System.out.println(targetBlock.Position);
+		}
 	}
 }

@@ -16,4 +16,9 @@ public class Point {
 		this.y = yPos;
 		this.z = zPos;
 	}
+	
+	
+	public String toString(){
+		return "("+this.x+", "+this.y+", "+this.z+")";
+	}
 }

@@ -14,16 +14,20 @@ public class Main implements Runnable{
 	public void run() {
 	World world = new World();
 		world.load();
-		Ant ant = new Ant(new Point(0, 0, 0));
+		Point p = TEST.getSpawn();
+		p.x = World.WorldDimension/2;
+		p.z = World.WorldDimension/2;
+		Ant ant = new Ant(p);
 		world.Ants = new Ant[]{ ant };
 		
-		int count = 100;
+		int count = 10000;
 		
 		while (count > 0)
 		{
 			for (Ant currentAnt : world.Ants)
 			{
 				ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> adjacentBlocks = world.GetBlocksAdjacentToAnt(currentAnt);
+				currentAnt.MoveRandomly(adjacentBlocks);
 			}
 			
 			try {

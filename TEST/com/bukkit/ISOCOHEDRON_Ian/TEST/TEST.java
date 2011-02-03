@@ -28,6 +28,8 @@ public class TEST extends JavaPlugin {
 	 private final HashMap debugees = new HashMap(); 
 	 static World current_world;
 	 Main m;
+	 static int spawnx=0;
+	 static int spawnz=0;
 	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException { 
 	 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
 	 m = new Main();
@@ -42,8 +44,11 @@ public class TEST extends JavaPlugin {
 	 public void onEnable() { 
 		 World W = getServer().getWorlds()[0];
 		 TEST.current_world = W;
+		 TEST.spawnx = W.getSpawnLocation().getBlockX();
+		 TEST.spawnz = W.getSpawnLocation().getBlockZ();
 		 //BlockDump(W);
-		 m.run();
+		 Thread t = new Thread(this.m);
+		 t.start();
 		 
 		 // Register our events 
 		 PluginManager pm = getServer().getPluginManager(); 
@@ -77,7 +82,7 @@ public class TEST extends JavaPlugin {
 	 private void BlockDump(World w){
 		 
 		 for(int i=1;i<16;i++){
-			 for(int j=1;j<16;j++){
+			 for(int j=1;j<128;j++){
 				 for(int k=1;k<128;k++){
 					 Block b = w.getBlockAt(i,j,k);
 					 System.out.println(b.toString());
@@ -87,17 +92,23 @@ public class TEST extends JavaPlugin {
 		 
 	 }
 	 
+	 public static com.bukkit.ISOCOHEDRON_Ian.TEST.Point getSpawn(){
+		 int X = TEST.current_world.getSpawnLocation().getBlockX();
+		 int Y = TEST.current_world.getSpawnLocation().getBlockY();
+		 int Z = TEST.current_world.getSpawnLocation().getBlockZ();
+		 return new com.bukkit.ISOCOHEDRON_Ian.TEST.Point(X,Y,Z);
+	 }
 	 
 	 public static int getBlockAt(int x,int y, int z){
-		 return TEST.current_world.getBlockTypeIdAt(x,y,z);
+		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
 	 }
 	 public static int removeBlockAt(int x,int y, int z){
 		 int type = TEST.current_world.getBlockTypeIdAt(x,y,z);
-		 TEST.current_world.getBlockAt(x,y,z).setTypeId(0);
+		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(0);
 		 return type;
 	 }
 	 public static void setBlockAt(int x,int y, int z,int type){
-		 TEST.current_world.getBlockAt(x,y,z).setTypeId(type);
+		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(type);
 	 }
 	 
  }

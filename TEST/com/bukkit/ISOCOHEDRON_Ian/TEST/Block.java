@@ -7,4 +7,10 @@ public class Block {
 		this.ID = ID;
 		this.Position = position;
 	}
+	
+	
+	public String toString(){
+		return ""+this.ID+" at:"+this.Position;
+		
+	}
 }
