@@ -21,4 +21,22 @@ public class Point {
 	public String toString(){
 		return "("+this.x+", "+this.y+", "+this.z+")";
 	}
+	
+	
+	public boolean equals(Object o){
+		
+		if(o instanceof com.bukkit.ISOCOHEDRON_Ian.TEST.Point){
+			com.bukkit.ISOCOHEDRON_Ian.TEST.Point p = (com.bukkit.ISOCOHEDRON_Ian.TEST.Point)o;
+			if(p.x==this.x && p.y==this.y && p.z==this.z){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		else{
+			return false;
+		}
+		
+	}
 }

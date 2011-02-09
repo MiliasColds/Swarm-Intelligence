@@ -19,7 +19,7 @@ public class World {
 	public ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> GetBlocksAdjacentToAnt(Ant currentAnt) 
 	{
 		ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> blocks = new ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block>();
-		Point antPos = currentAnt.Position;
+		Point antPos = currentAnt.Position.Position;
 		
 		if (antPos.x - 1 > 0) // Left
 			blocks.add(Blocks[antPos.x-1][antPos.y][antPos.z]);

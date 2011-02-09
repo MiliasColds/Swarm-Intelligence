@@ -17,8 +17,16 @@ public class Main implements Runnable{
 		Point p = TEST.getSpawn();
 		p.x = World.WorldDimension/2;
 		p.z = World.WorldDimension/2;
-		Ant ant = new Ant(p);
-		world.Ants = new Ant[]{ ant };
+		
+		world.Nest = new Nest(world.Blocks[p.x][p.y][p.z], 10);
+		
+		ArrayList<Ant> ants = new ArrayList<Ant>(); 
+		
+		for (int i = 0; i < 10; i++) {
+			ants.add(new Ant(world.Blocks[p.x][p.y][p.z], 64));
+		}
+		
+		world.Ants = (Ant[]) ants.toArray();
 		
 		int count = 10000;
 		
