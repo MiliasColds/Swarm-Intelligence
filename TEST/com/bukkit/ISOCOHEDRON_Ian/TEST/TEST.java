@@ -30,6 +30,7 @@ public class TEST extends JavaPlugin {
 	 Main m;
 	 static int spawnx=0;
 	 static int spawnz=0;
+	 static int spawny=0;
 	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException { 
 	 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
 	 m = new Main();
@@ -42,11 +43,14 @@ public class TEST extends JavaPlugin {
  
  
 	 public void onEnable() { 
-		 World W = getServer().getWorlds()[0];
+		 World W = getServer().getWorlds().get(0);
 		 TEST.current_world = W;
 		 TEST.spawnx = W.getSpawnLocation().getBlockX();
 		 TEST.spawnz = W.getSpawnLocation().getBlockZ();
+		 TEST.spawny = W.getSpawnLocation().getBlockY();
 		 //BlockDump(W);
+		 System.out.println(spawny);
+		 System.console().readLine();
 		 Thread t = new Thread(this.m);
 		 t.start();
 		 
@@ -100,15 +104,15 @@ public class TEST extends JavaPlugin {
 	 }
 	 
 	 public static int getBlockAt(int x,int y, int z){
-		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
+		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y+spawny,z+spawnz);
 	 }
 	 public static int removeBlockAt(int x,int y, int z){
-		 int type = TEST.current_world.getBlockTypeIdAt(x,y,z);
-		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(0);
+		 int type = TEST.current_world.getBlockTypeIdAt(x+spawnx,y+spawny,z+spawnz);
+		 TEST.current_world.getBlockAt(x+spawnx,y+spawny,z+spawnz).setTypeId(0);
 		 return type;
 	 }
 	 public static void setBlockAt(int x,int y, int z,int type){
-		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(type);
+		 TEST.current_world.getBlockAt(x+spawnx,y+spawny,z+spawnz).setTypeId(type);
 	 }
 	 
  }

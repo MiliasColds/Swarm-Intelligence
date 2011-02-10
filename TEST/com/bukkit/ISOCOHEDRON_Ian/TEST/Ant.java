@@ -22,33 +22,40 @@ public class Ant
 		a = 5;
 		b = 3;
 		g = 7;
+		this.state = ANT_STATE.Exploring;
 		this.Position = position;
+		this.Previous = position;
 		this.LifeTime = LifeTime;
 	}
 	
 	public void MoveRandomly(ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> adjacentBlocks)
 	{
-		com.bukkit.ISOCOHEDRON_Ian.TEST.Block targetBlock = null;// = adjacentBlocks.get(random.nextInt(adjacentBlocks.size()));
+		com.bukkit.ISOCOHEDRON_Ian.TEST.Block targetBlock = this.Position;// = adjacentBlocks.get(random.nextInt(adjacentBlocks.size()));
 		adjacentBlocks.remove(this.Previous);
-		switch(state){
+		switch(this.state){
 			case Exploring:
 				Random random = new Random();
-				
 				float r = random.nextFloat();
-				float r_total = 0; // resource
-				float e_total = 0; // exploratory
-				float hardness_total = 0;
+				float total = 0;
 				for(int i = 0; i < adjacentBlocks.size(); i ++ ) {
-					r_total += adjacentBlocks.get(i).r_pheromone;
-					e_total += adjacentBlocks.get(i).e_pheromone;
-					hardness_total += adjacentBlocks.get(i).getHardness();
+					float totalx = 1;
+					totalx *= (float) Math.pow(adjacentBlocks.get(i).r_pheromone,this.a) ;
+					totalx *= (float) Math.pow(adjacentBlocks.get(i).e_pheromone,this.b) ;
+					totalx *= (float) Math.pow(adjacentBlocks.get(i).getHardness(),this.g);
+					total+=totalx;
 				}
 				float probabilities[] = new float[adjacentBlocks.size()];
 				for(int i = 0; i < adjacentBlocks.size(); i ++ ) {
-					float R = (float)Math.pow(adjacentBlocks.get(i).r_pheromone,a) ;
-					float E = (float) Math.pow(adjacentBlocks.get(i).e_pheromone,b) ;
-					float H = (float) Math.pow(adjacentBlocks.get(i).getHardness(),g);
-					probabilities[i] = (R*E*H)/(r_total*e_total*hardness_total);
+					float R = (float) Math.pow(adjacentBlocks.get(i).r_pheromone,this.a) ;
+					float E = (float) Math.pow(adjacentBlocks.get(i).e_pheromone,this.b) ;
+					float H = (float) Math.pow(adjacentBlocks.get(i).getHardness(),this.g);
+					//System.out.println(R);
+					//System.out.println(E);
+					//sSystem.out.println(H);
+					probabilities[i] = (R*E*H)/(total);
+				}
+				for(int m=0;m<probabilities.length;m++){
+					System.out.println(probabilities[m]);
 				}
 				float probability = 0;
 				for(int i = 0; i < adjacentBlocks.size(); i ++ ) {
@@ -61,8 +68,20 @@ public class Ant
 				try{
 					if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==16){
 						this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
-						this.Previous.e_pheromone += 1/Previous.getHardness();
+						if(!this.Position.equals(this.Previous)){
+							this.Previous.e_pheromone += 1/this.Previous.getHardness();
+						}
 						this.state = ANT_STATE.Resource;
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
+						this.Previous = this.Position;
+						this.Position = targetBlock;
+						System.out.println(targetBlock);
+					}
+					else if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==0){
+						//this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
 						this.Previous = this.Position;
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
@@ -70,22 +89,28 @@ public class Ant
 					else { 
 						this.LifeTime --;
 						TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
-						this.Previous.e_pheromone += 1/Previous.getHardness();
+						if(!this.Position.equals(this.Previous)){
+							this.Previous.e_pheromone += 1/this.Previous.getHardness();
+						}
 						this.Previous = this.Position;
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
 					}
 				}
 				catch(NullPointerException e){
 					System.out.println(targetBlock.Position);
+					e.printStackTrace();
 				}
 				break;
 			case Returning:
 				this.Position = this.Nest.Position;
 				this.state = ANT_STATE.Exploring;
+				this.LifeTime = 64;
 				break;
 			case Resource:
-				Previous.r_pheromone += 0.01;
+				this.Previous.r_pheromone += 0.01;
 				float e_amounts[] = new float[adjacentBlocks.size()]; // exploratory
 				
 				com.bukkit.ISOCOHEDRON_Ian.TEST.Block maximum = adjacentBlocks.get(0);
@@ -101,12 +126,24 @@ public class Ant
 				try{
 					if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==16){
 						this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
+						this.Previous = this.Position;
+						this.Position = targetBlock;
+						System.out.println(targetBlock);
+					}
+					else if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==0){
+						//this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
 						this.Previous = this.Position;
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
 					}
 					else { 
 						TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
 						this.Previous = this.Position;
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
@@ -121,5 +158,15 @@ public class Ant
 		{
 			this.state = ANT_STATE.Returning;
 		}
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param nest2
+	 */
+	public void setNest(Nest nest2) {
+		this.Nest = nest2;
+		
 	}
 }

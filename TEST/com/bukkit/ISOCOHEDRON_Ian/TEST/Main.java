@@ -17,16 +17,20 @@ public class Main implements Runnable{
 		Point p = TEST.getSpawn();
 		p.x = World.WorldDimension/2;
 		p.z = World.WorldDimension/2;
+		p.y = World.WorldDimension_H/2;
 		
 		world.Nest = new Nest(world.Blocks[p.x][p.y][p.z], 10);
 		
 		ArrayList<Ant> ants = new ArrayList<Ant>(); 
 		
 		for (int i = 0; i < 10; i++) {
-			ants.add(new Ant(world.Blocks[p.x][p.y][p.z], 64));
+			Ant a = new Ant(world.Blocks[p.x][p.y][p.z], 64);
+			a.setNest(world.Nest);
+			ants.add(a);
+			
 		}
 		
-		world.Ants = (Ant[]) ants.toArray();
+		world.Ants =  ants;
 		
 		int count = 10000;
 		
@@ -39,7 +43,7 @@ public class Main implements Runnable{
 			}
 			
 			try {
-				Thread.currentThread().sleep(100);
+				Thread.currentThread().sleep(1000);
 			} catch (InterruptedException exception) {
 				// TODO Auto-generated catch-block stub.
 				exception.printStackTrace();

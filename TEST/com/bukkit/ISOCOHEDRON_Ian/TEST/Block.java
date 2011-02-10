@@ -2,7 +2,7 @@ package com.bukkit.ISOCOHEDRON_Ian.TEST;
 public class Block {
 	public Point Position;
 	public int ID;
-	public float r_pheromone,e_pheromone = 0.00000001f;
+	public float r_pheromone = 0.001f,e_pheromone = 0.001f;
 	public Block(Point position,int ID)
 	{
 		this.ID = ID;
@@ -35,6 +35,6 @@ public class Block {
 
 	public float getHardness() {
 		
-		return 1;
+		return 10000;
 	}
 }
