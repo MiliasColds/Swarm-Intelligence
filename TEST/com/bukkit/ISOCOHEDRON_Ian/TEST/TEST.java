@@ -104,15 +104,15 @@ public class TEST extends JavaPlugin {
 	 }
 	 
 	 public static int getBlockAt(int x,int y, int z){
-		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y+spawny,z+spawnz);
+		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
 	 }
 	 public static int removeBlockAt(int x,int y, int z){
-		 int type = TEST.current_world.getBlockTypeIdAt(x+spawnx,y+spawny,z+spawnz);
-		 TEST.current_world.getBlockAt(x+spawnx,y+spawny,z+spawnz).setTypeId(0);
+		 int type = TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
+		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(0);
 		 return type;
 	 }
 	 public static void setBlockAt(int x,int y, int z,int type){
-		 TEST.current_world.getBlockAt(x+spawnx,y+spawny,z+spawnz).setTypeId(type);
+		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(type);
 	 }
 	 
  }

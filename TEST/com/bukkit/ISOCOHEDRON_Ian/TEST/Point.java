@@ -39,4 +39,9 @@ public class Point {
 		}
 		
 	}
+	
+	public double DistanceTo(Point point)
+	{
+		return Math.sqrt(Math.pow(this.x-point.x, 2) + Math.pow(this.y-point.y, 2) + Math.pow(this.z-point.z, 2));
+	}
 }

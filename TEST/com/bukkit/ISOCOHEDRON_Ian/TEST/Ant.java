@@ -67,34 +67,26 @@ public class Ant
 				}
 				try{
 					if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==16){
-						this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
+						this.heldBlock = this.Position; // new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
 						if(!this.Position.equals(this.Previous)){
 							this.Previous.e_pheromone += 1/this.Previous.getHardness();
 						}
 						this.state = ANT_STATE.Resource;
 						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
-						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
-						this.Previous = this.Position;
-						this.Position = targetBlock;
-						System.out.println(targetBlock);
-					}
-					else if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==0){
-						//this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
-						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
-						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,20);
 						this.Previous = this.Position;
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
 					}
 					else { 
 						this.LifeTime --;
-						TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
+						//TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z);
 						if(!this.Position.equals(this.Previous)){
 							this.Previous.e_pheromone += 1/this.Previous.getHardness();
 						}
 						this.Previous = this.Position;
 						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
-						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
+						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,20);
 						this.Position = targetBlock;
 						System.out.println(targetBlock);
 					}
@@ -115,7 +107,6 @@ public class Ant
 				
 				com.bukkit.ISOCOHEDRON_Ian.TEST.Block maximum = adjacentBlocks.get(0);
 				for(int i = 0; i < adjacentBlocks.size(); i ++ ) {
-					//e_amounts[i] = adjacentBlocks.get(i).e_pheromone;
 					if(adjacentBlocks.get(i).e_pheromone > maximum.e_pheromone)
 					{
 						maximum = adjacentBlocks.get(i);
@@ -125,15 +116,7 @@ public class Ant
 				
 				try{
 					if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==16){
-						this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
-						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
-						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
-						this.Previous = this.Position;
-						this.Position = targetBlock;
-						System.out.println(targetBlock);
-					}
-					else if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==0){
-						//this.heldBlock =new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
+						this.heldBlock = this.Position; //new com.bukkit.ISOCOHEDRON_Ian.TEST.Block( targetBlock.Position,TEST.removeBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z));
 						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
 						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,0);
 						this.Previous = this.Position;

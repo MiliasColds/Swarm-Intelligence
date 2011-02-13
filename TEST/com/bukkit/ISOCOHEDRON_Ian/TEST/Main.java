@@ -17,7 +17,7 @@ public class Main implements Runnable{
 		Point p = TEST.getSpawn();
 		p.x = World.WorldDimension/2;
 		p.z = World.WorldDimension/2;
-		p.y = World.WorldDimension_H/2;
+		p.y = World.WorldDimension_H/2+5;
 		
 		world.Nest = new Nest(world.Blocks[p.x][p.y][p.z], 10);
 		
@@ -43,7 +43,7 @@ public class Main implements Runnable{
 			}
 			
 			try {
-				Thread.currentThread().sleep(1000);
+				Thread.currentThread().sleep(500);
 			} catch (InterruptedException exception) {
 				// TODO Auto-generated catch-block stub.
 				exception.printStackTrace();
