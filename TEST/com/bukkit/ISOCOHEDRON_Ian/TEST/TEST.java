@@ -50,7 +50,7 @@ public class TEST extends JavaPlugin {
 		 TEST.spawny = W.getSpawnLocation().getBlockY();
 		 //BlockDump(W);
 		 System.out.println(spawny);
-		 System.console().readLine();
+		 
 		 Thread t = new Thread(this.m);
 		 t.start();
 		 

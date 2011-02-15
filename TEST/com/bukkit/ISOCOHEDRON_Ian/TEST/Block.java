@@ -3,7 +3,7 @@ package com.bukkit.ISOCOHEDRON_Ian.TEST;
 public class Block {
 	public Point Position;
 	public int ID;
-	public float r_pheromone = 0.001f,e_pheromone = 0.001f;
+	public float r_pheromone = (float) 1,e_pheromone = (float) 1;
 	public World World;
 	
 	public Block(Point position,int ID, World world)
@@ -38,6 +38,6 @@ public class Block {
 
 
 	public double getHardness() {
-		return 300 - 1/(this.World.Nest.Position.Position.DistanceTo(this.Position)+1)*100;
+		return 800 - (1/(this.World.Nest.Position.Position.DistanceTo(this.Position)+1))*400;
 	}
 }

@@ -23,7 +23,7 @@ public class Main implements Runnable{
 		
 		ArrayList<Ant> ants = new ArrayList<Ant>(); 
 		
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			Ant a = new Ant(world.Blocks[p.x][p.y][p.z], 64);
 			a.setNest(world.Nest);
 			ants.add(a);
@@ -40,16 +40,23 @@ public class Main implements Runnable{
 			{
 				ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> adjacentBlocks = world.GetBlocksAdjacentToAnt(currentAnt);
 				currentAnt.MoveRandomly(adjacentBlocks);
+				try {
+					Thread.currentThread().sleep(10);
+				} catch (InterruptedException exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
 			}
 			
 			try {
-				Thread.currentThread().sleep(500);
+				Thread.currentThread().sleep(100);
 			} catch (InterruptedException exception) {
 				// TODO Auto-generated catch-block stub.
 				exception.printStackTrace();
 			}
-			
+			if(count%64==0)world.evaporate();
 			count--;
+			
 		}
 		
 	}
