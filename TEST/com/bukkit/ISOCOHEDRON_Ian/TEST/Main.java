@@ -23,7 +23,7 @@ public class Main implements Runnable{
 		
 		ArrayList<Ant> ants = new ArrayList<Ant>(); 
 		
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 10; i++) {
 			Ant a = new Ant(world.Blocks[p.x][p.y][p.z], 64);
 			a.setNest(world.Nest);
 			ants.add(a);

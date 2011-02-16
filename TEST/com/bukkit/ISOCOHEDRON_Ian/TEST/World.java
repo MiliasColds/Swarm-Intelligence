@@ -6,7 +6,7 @@ import org.bukkit.block.Block;
 public class World {
 	public ArrayList<Ant> Ants;
 	public com.bukkit.ISOCOHEDRON_Ian.TEST.Block[][][] Blocks ;
-	public Nest Nest;
+	public static Nest Nest;
 	public static int WorldDimension_H = 128;
 	public static int WorldDimension = 40;
 	public ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> P_Blocks;
@@ -74,13 +74,15 @@ public class World {
 	public void evaporate(){
 		for(int i=0; i< this.P_Blocks.size();i++){
 			com.bukkit.ISOCOHEDRON_Ian.TEST.Block B = this.P_Blocks.get(i);
-			B.r_pheromone = B.r_pheromone * this.Rate;
+			//B.r_pheromone = B.r_pheromone * (this.Rate/2);
 			B.e_pheromone = B.e_pheromone * this.Rate;
-			if(B.e_pheromone<1){
+			if(B.r_pheromone>1&&B.e_pheromone<1){
 				B.e_pheromone = 1;
+				//TEST.setBlockAt(B.Position.x,B.Position.y,B.Position.z,1);
 			}
-			if(B.r_pheromone<1){
-				B.r_pheromone = 1;
+			else if(B.e_pheromone<1){
+				B.e_pheromone = 1;
+				TEST.setBlockAt(B.Position.x,B.Position.y,B.Position.z,1);
 			}
 		}
 	}
