@@ -6,6 +6,8 @@ import org.bukkit.block.Block;
 
 public class Main implements Runnable{
 
+	public static Point p;
+	
 	/**
 	 * @param args
 	 * @throws InterruptedException 
@@ -14,12 +16,17 @@ public class Main implements Runnable{
 	public void run() {
 	World world = new World();
 		world.load();
-		Point p = TEST.getSpawn();
+		p = TEST.getSpawn();
 		p.x = World.WorldDimension/2;
 		p.z = World.WorldDimension/2;
-		p.y = World.WorldDimension_H/2+World.offset;
-		
+		p.y = World.WorldDimension_H/2;
+		System.out.println("RealPos: " + TEST.spawnx + " " + TEST.spawny + " " + TEST.spawnz);
+		System.out.println("LocalPos: " + p.x + " " + p.y + " " + p.z);
 		world.Nest = new Nest(world.Blocks[p.x][p.y][p.z], 10);
+		
+		//TEST.current_world.getBlockAt(TEST.spawnx,TEST.spawny,TEST.spawnz).setTypeId(11);
+		
+		TEST.setBlockAt(p.x, p.y+10, p.z, 57);
 		
 		ArrayList<Ant> ants = new ArrayList<Ant>(); 
 		
@@ -32,7 +39,7 @@ public class Main implements Runnable{
 		
 		world.Ants =  ants;
 		
-		int count = 10000;
+		int count = 1000;
 		
 		while (count > 0)
 		{
@@ -48,18 +55,18 @@ public class Main implements Runnable{
 				}
 			}
 			
-			try {
-				Thread.currentThread().sleep(100);
-			} catch (InterruptedException exception) {
-				// TODO Auto-generated catch-block stub.
-				exception.printStackTrace();
-			}
+//			try {
+//				Thread.currentThread().sleep(100);
+//			} catch (InterruptedException exception) {
+//				// TODO Auto-generated catch-block stub.
+//				exception.printStackTrace();
+//			}
 			if(count%64==0)world.evaporate();
 			count--;
 			
 		}
 		
+		System.out.println("Finished!")
+		
 	}
-
-	
 }

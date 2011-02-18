@@ -31,16 +31,16 @@ public class TEST extends JavaPlugin {
 	 static int spawnx=0;
 	 static int spawnz=0;
 	 static int spawny=0;
-	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException { 
-	 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
-	 m = new Main();
-	 // TODO: Place any custom initialisation code here 
 	 
-	 // NOTE: Event registration should be done in onEnable not here as all events are unregistered when a plugin is disabled 
-	 
+	 public TEST(PluginLoader pluginLoader, Server instance, PluginDescriptionFile desc, File folder, File plugin, ClassLoader cLoader) throws IOException 
+	 { 
+		 super(pluginLoader, instance, desc, folder, plugin, cLoader); 
+		 m = new Main();
+		 // TODO: Place any custom initialisation code here 
+		 
+		 // NOTE: Event registration should be done in onEnable not here as all events are unregistered when a plugin is disabled 
+		 
 	 } 
- 
- 
  
 	 public void onEnable() { 
 		 World W = getServer().getWorlds().get(0);
@@ -104,15 +104,21 @@ public class TEST extends JavaPlugin {
 	 }
 	 
 	 public static int getBlockAt(int x,int y, int z){
-		 return TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
+		 return TEST.current_world.getBlockTypeIdAt(x-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawnx,
+												    y-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawny,
+													z-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawnz);
 	 }
 	 public static int removeBlockAt(int x,int y, int z){
-		 int type = TEST.current_world.getBlockTypeIdAt(x+spawnx,y,z+spawnz);
-		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(0);
+		 int type = TEST.current_world.getBlockTypeIdAt(x,y,z);
+		 TEST.current_world.getBlockAt(x-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawnx,
+				 					   y-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawny,
+				 					   z-(com.bukkit.ISOCOHEDRON_Ian.TEST.World.WorldDimension/2)+spawnz).setTypeId(0);
 		 return type;
 	 }
 	 public static void setBlockAt(int x,int y, int z,int type){
-		 TEST.current_world.getBlockAt(x+spawnx,y,z+spawnz).setTypeId(type);
+		 TEST.current_world.getBlockAt(x-Main.p.x+spawnx,
+				 					   y-Main.p.y+spawny,
+				 					   z-Main.p.z+spawnz).setTypeId(type);
 	 }
 	 
  }
