@@ -8,6 +8,7 @@ public class World {
 	public com.bukkit.ISOCOHEDRON_Ian.TEST.Block[][][] Blocks ;
 	public static Nest Nest;
 	public static int WorldDimension_H = 128;
+	public static int offset = 10;
 	public static int WorldDimension = 40;
 	public ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> P_Blocks;
 	public static float Rate = 0.45f;
@@ -47,14 +48,21 @@ public class World {
 		for(int i=0;i<WorldDimension;i++){
 			 //for(int j=0;j<WorldDimension_H;j++){
 				 for(int k=0;k<WorldDimension;k++){
-					 TEST.setBlockAt(i,this.WorldDimension_H/2+5,k,1);
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,1);
 				 }
 			 //}
 		 }
 		for(int i=10;i<15;i++){
 			 //for(int j=0;j<WorldDimension_H;j++){
 				 for(int k=10;k<15;k++){
-					 TEST.setBlockAt(i,this.WorldDimension_H/2+5,k,16);
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,16);
+				 }
+			 //}
+		 }
+		for(int i=10;i<15;i++){
+			 //for(int j=0;j<WorldDimension_H;j++){
+				 for(int k=1;k<5;k++){
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,16);
 				 }
 			 //}
 		 }

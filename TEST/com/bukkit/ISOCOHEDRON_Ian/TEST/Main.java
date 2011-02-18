@@ -17,7 +17,7 @@ public class Main implements Runnable{
 		Point p = TEST.getSpawn();
 		p.x = World.WorldDimension/2;
 		p.z = World.WorldDimension/2;
-		p.y = World.WorldDimension_H/2+5;
+		p.y = World.WorldDimension_H/2+World.offset;
 		
 		world.Nest = new Nest(world.Blocks[p.x][p.y][p.z], 10);
 		

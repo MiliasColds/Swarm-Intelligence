@@ -38,7 +38,12 @@ public class Block implements Comparable{
 
 
 	public double getHardness() {
-		return 800 - (1/(this.World.Nest.Position.Position.DistanceTo(this.Position)+1))*400;
+		if(this.ID!=16){
+			return 800 - (1/(this.World.Nest.Position.Position.DistanceTo(this.Position)+1))*400;
+		}
+		else {
+			return (800 - (1/(this.World.Nest.Position.Position.DistanceTo(this.Position)+1))*400)-200;
+		}
 	}
 
 

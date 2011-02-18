@@ -76,10 +76,11 @@ public class Ant
 						this.Previous.e_pheromone += (800-this.Previous.getHardness())/20;
 						this.Position.e_pheromone += (800-this.Position.getHardness())/20;
 						this.state = ANT_STATE.Resource;
-						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,90);
+						TEST.setBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z,0);
 						TEST.setBlockAt(this.Previous.Position.x,this.Previous.Position.y,this.Previous.Position.z,20);
+						com.bukkit.ISOCOHEDRON_Ian.TEST.Block t = this.Previous;
 						this.Previous = this.Position;
-						this.Position = targetBlock;
+						this.Position = t;
 						System.out.println(targetBlock);
 					}
 					else if(TEST.getBlockAt(targetBlock.Position.x,targetBlock.Position.y,targetBlock.Position.z)==52){
@@ -120,6 +121,7 @@ public class Ant
 			case Resource:
 				this.Previous.r_pheromone += (800-this.Previous.getHardness())/5;
 				//float e_amounts[] = new float[adjacentBlocks.size()]; // exploratory
+				adjacentBlocks.remove(this.Previous);
 				Collections.sort(adjacentBlocks);
 				com.bukkit.ISOCOHEDRON_Ian.TEST.Block maximum = adjacentBlocks.get(0);
 				for(int i = 0; i < adjacentBlocks.size(); i ++ ) {
