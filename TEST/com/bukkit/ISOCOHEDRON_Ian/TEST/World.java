@@ -7,9 +7,9 @@ public class World {
 	public ArrayList<Ant> Ants;
 	public com.bukkit.ISOCOHEDRON_Ian.TEST.Block[][][] Blocks ;
 	public static Nest Nest;
-	public static int WorldDimension_H = 256;
-	//public static int WorldDimension = 40;
-	public static int WorldDimension = 256;
+	public static int WorldDimension_H = 128;
+	public static int offset = 10;
+	public static int WorldDimension = 40;
 	public ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> P_Blocks;
 	public static float Rate = 0.45f;
 	
@@ -18,22 +18,23 @@ public class World {
 		this.P_Blocks = new ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block>();
 	}
 	
+	
 	public ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> GetBlocksAdjacentToAnt(Ant currentAnt) 
 	{
 		ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block> blocks = new ArrayList<com.bukkit.ISOCOHEDRON_Ian.TEST.Block>();
 		Point antPos = currentAnt.Position.Position;
 		
-		if (antPos.x - 1 > 0)
+		if (antPos.x - 1 > 0) // Left
 			blocks.add(Blocks[antPos.x-1][antPos.y][antPos.z]);
-		if (antPos.y - 1 > 0)
-			blocks.add(Blocks[antPos.x][antPos.y-1][antPos.z]);
-		if (antPos.z - 1 > 0)
+		if (antPos.y - 1 > 0) // Back
+			//blocks.add(Blocks[antPos.x][antPos.y-1][antPos.z]);
+		if (antPos.z - 1 > 0) // Down
 			blocks.add(Blocks[antPos.x][antPos.y][antPos.z-1]);
-		if (antPos.x + 1 < WorldDimension-1)
+		if (antPos.x + 1 < WorldDimension-1) // Right
 			blocks.add(Blocks[antPos.x+1][antPos.y][antPos.z]);
-		if (antPos.y + 1 < WorldDimension_H-1 && (antPos.y + 1) <= TEST.spawny)
-			blocks.add(Blocks[antPos.x][antPos.y+1][antPos.z]);
-		if (antPos.z + 1 < WorldDimension-1)
+		if (antPos.y + 1 < WorldDimension_H-1) // Forward
+			//blocks.add(Blocks[antPos.x][antPos.y+1][antPos.z]);
+		if (antPos.z + 1 < WorldDimension-1) // Up
 			blocks.add(Blocks[antPos.x][antPos.y][antPos.z+1]);
 		
 		return blocks;
@@ -44,29 +45,34 @@ public class World {
 	 *
 	 */
 	public void load() {
-		/*
 		for(int i=0;i<WorldDimension;i++){
 			 //for(int j=0;j<WorldDimension_H;j++){
 				 for(int k=0;k<WorldDimension;k++){
-					 TEST.setBlockAt(i,this.WorldDimension_H/2+5,k,1);
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,1);
 				 }
 			 //}
 		 }
 		for(int i=10;i<15;i++){
 			 //for(int j=0;j<WorldDimension_H;j++){
 				 for(int k=10;k<15;k++){
-					 TEST.setBlockAt(i,this.WorldDimension_H/2+5,k,16);
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,16);
 				 }
 			 //}
-		 }print
-		 */
+		 }
+		for(int i=10;i<15;i++){
+			 //for(int j=0;j<WorldDimension_H;j++){
+				 for(int k=1;k<5;k++){
+					 TEST.setBlockAt(i,this.WorldDimension_H/2+offset,k,16);
+				 }
+			 //}
+		 }
 		
 		for(int i=0;i<WorldDimension;i++){
 			 for(int j=0;j<WorldDimension_H;j++){
 				 for(int k=0;k<WorldDimension;k++){
 					 int b = TEST.getBlockAt(i,j,k);
 					 this.Blocks[i][j][k] = new com.bukkit.ISOCOHEDRON_Ian.TEST.Block(new Point(i,j,k),b, this);
-					 //System.out.println(this.Blocks[i][j][k]);
+					 System.out.println(this.Blocks[i][j][k]);
 				 }
 			 }
 		 }
@@ -84,7 +90,7 @@ public class World {
 			}
 			else if(B.e_pheromone<1){
 				B.e_pheromone = 1;
-				//TEST.setBlockAt(B.Position.x,B.Position.y,B.Position.z,1);
+				TEST.setBlockAt(B.Position.x,B.Position.y,B.Position.z,1);
 			}
 		}
 	}
